@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ClassiCube Animation Generator</title>
+<link rel="icon" type="image/gif" href="https://media.tenor.com/TpZ5dQKpk7YAAAAj/fire-minecraft.gif">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 20px;
+}
+
+h1 {
+    margin-bottom: 5px;
+}
+
+p {
+    margin-top: 0;
+    color: #555;
+}
+
+fieldset {
+    margin-bottom: 15px;
+    padding: 12px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 180px;
+    padding: 5px;
+    margin-top: 2px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 6px 12px;
+}
+
+textarea {
+    width: 100%;
+    height: 80px;
+    margin-top: 15px;
+    font-family: Consolas, monospace;
+}
+
+.credit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    color: #777;
+    font-size: 13px;
+}
+
+.credit::before,
+.credit::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid #ccc;
+}
+</style>
+</head>
+<body>
+
+<h1><img src="https://i.imgur.com/fkvV9RP.png" width="32" height="32"> <img src="https://media.tenor.com/TpZ5dQKpk7YAAAAj/fire-minecraft.gif" width="32" height="32"> ClassiCube Animation Generator</h1>
+<p>Create a line for <code>animations.txt.</code><br>
+<div class="credit">
+    <span>Made by <a href="https://f.classicube.net/profile/6790-luigi_bros88/" target="_blank">Luigi_Bros88</a></span>
+</div>
+<br> Remember - coordinate numbers start from 0!</p>
+
+<fieldset>
+    <legend>Animation</legend>
+
+    <label>
+        Animation Name
+        <input type="text" id="name" value="Fire">
+    </label>
+</fieldset>
+
+<fieldset>
+    <legend>Texture to Animate (terrain.png)</legend>
+
+    <label>
+        Texture Tile Column
+        <input type="number" id="tileX" value="6" min="0">
+    </label>
+
+    <label>
+        Texture Tile Row
+        <input type="number" id="tileY" value="2" min="0">
+    </label>
+</fieldset>
+
+<fieldset>
+    <legend>Animation Frames (animations.png)</legend>
+
+    <label>
+        Animation Start X (pixels)
+        <input type="number" id="frameX" value="0" min="0">
+    </label>
+
+    <label>
+        Animation Start Y (pixels)
+        <input type="number" id="frameY" value="0" min="0">
+    </label>
+
+    <label>
+        Frame Size (pixels)
+        <input type="number" id="frameSize" value="16" min="1">
+    </label>
+
+    <label>
+        Number of Frames
+        <input type="number" id="frameCount" value="32" min="1">
+    </label>
+
+    <label>
+        Frame Delay (ticks)
+        <input type="number" id="tickDelay" value="0" min="0">
+    </label>
+</fieldset>
+
+<button onclick="copyOutput()">Copy</button>
+
+<textarea id="output" readonly></textarea>
+
+<script>
+
+const inputs = document.querySelectorAll("input");
+
+inputs.forEach(input => {
+    input.addEventListener("input", generate);
+});
+
+function generate() {
+
+    const name = document.getElementById("name").value;
+
+    const tileX = document.getElementById("tileX").value;
+    const tileY = document.getElementById("tileY").value;
+
+    const frameX = document.getElementById("frameX").value;
+    const frameY = document.getElementById("frameY").value;
+
+    const frameSize = document.getElementById("frameSize").value;
+    const frameCount = document.getElementById("frameCount").value;
+    const tickDelay = document.getElementById("tickDelay").value;
+
+    document.getElementById("output").value =
+`# ${name}
+${tileX} ${tileY} ${frameX} ${frameY} ${frameSize} ${frameCount} ${tickDelay}`;
+
+}
+
+generate();
+
+function copyOutput() {
+    const button = event.target;
+
+    navigator.clipboard.writeText(
+        document.getElementById("output").value
+    );
+
+    button.textContent = "Copied!";
+
+    setTimeout(() => {
+        button.textContent = "Copy";
+    }, 1000);
+}
+
+</script>
+
+</body>
+</html>
